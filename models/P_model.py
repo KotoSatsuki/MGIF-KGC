@@ -173,10 +173,6 @@ class KGCPromptTuner(pl.LightningModule):
         plm_ent_embed = self.fc(plm_ent_embed.reshape(ent_embed.size(0), -1))
         plm_rel_embed = self.fc(plm_rel_embed.reshape(rel_embed.size(0), -1))
 
-        # (batch_size, embed_dim)
-        plm_ent_embed = F.normalize(self.mlp_res(plm_ent_embed) + plm_ent_embed, p=2, dim=-1)
-        plm_rel_embed = F.normalize(self.mlp_res(plm_rel_embed) + plm_rel_embed, p=2, dim=-1)
-
         # pred -- .shape: (batch_size, embed_dim)
         pred = self.graph_model(plm_ent_embed, plm_rel_embed)
 
